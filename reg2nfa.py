@@ -26,7 +26,7 @@ class formal_nfa:
         self.must_change_states = {}
         self.find_transitions(0,1,regex.replace(" ", ""))
         self.deleteStartofStar()
-        self.print_nfa()
+        #self.print_nfa()
 
 
     def print_nfa(self):
@@ -54,6 +54,7 @@ class formal_nfa:
 
         somethingChanged = True
         while(somethingChanged):
+            
             somethingChanged = False
             for value in self.must_change_states.values():
                 for key in self.must_change_states.keys():
@@ -167,14 +168,15 @@ class formal_nfa:
                         break
 
 
-                elif(element == "*" and p == 0):
-                    print("in star")
+                elif(element == "*" and self.readyForConcanetion(t.regex) and p == 0):
+                    #print("in star")
                     point = i
 
                     if(t.regex[i-1] == ")"):
                         point = self.findBracketsStartPoint(t.regex, i-1)
 
-                    self.must_change_states[t.start] = t.end
+                    if (t.start != t.end):
+                        self.must_change_states[t.start] = t.end
                     self.find_transitions(t.end, t.end, t.regex[point - 1: i])
                     
                     
