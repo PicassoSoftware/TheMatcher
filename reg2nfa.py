@@ -1,4 +1,3 @@
-
 # Transitions class hold transitions 
 class transition:
     def __init__(self, start, end, regex): 
@@ -13,10 +12,12 @@ class transition:
         else:
             return False
     
+    # Print transition prettier.
     def print_t(self):
         print (f'\tq{self.start} -> q{self.end} when {self.regex} comes.')
 
 
+# NFA class
 class formal_nfa:
     def __init__(self, regex):
         self.Q = 2
@@ -24,11 +25,11 @@ class formal_nfa:
         self.start = 0
         self.accept = 1
         self.must_change_states = {}
-        self.find_transitions(0,1,regex.replace(" ", ""))
-        self.deleteStartofStar()
+        self.__find_transitions(0,1,regex)
+        self.__deleteStartofStar()
         #self.print_nfa()
 
-
+    # Print NFA. 
     def print_nfa(self):
         print("\n\n\nStates: ", end=" ")
 
@@ -46,14 +47,30 @@ class formal_nfa:
         print(f"Accept state is q{self.accept}\n\n")
 
 
-    def optimizeChangables(self):
+    '''
+    This function optimize changable states
+
+    For Example:
+        q2 must change to q1
+        q1 must change to q3
+        q4 must change to q5
+        q6 must change to q1
+    
+    As you can see we must change "q1"s to "q3" on right side, because of row 2.
+
+    __optimizeChangables function do this operation.
+    ''' 
+
+    def __optimizeChangables(self):
+        # Find key by given value.
         def getKey(val):
             for key, value in self.must_change_states.items():
                  if val == value:
                      return key
 
-        somethingChanged = True
-        while(somethingChanged):
+        somethingChanged = True  
+
+        while(somethingChanged): # We must check all situations.
             
             somethingChanged = False
             for value in self.must_change_states.values():
@@ -67,9 +84,9 @@ class formal_nfa:
 
 
 
-
-    def deleteStartofStar(self):
-        self.optimizeChangables()
+    # This Function delete unnecessary states. (For better understanding check out Readme)
+    def __deleteStartofStar(self):
+        self.__optimizeChangables()
 
         for key, value in self.must_change_states.items():
             if key == self.start:
@@ -78,14 +95,46 @@ class formal_nfa:
                 self.accept = value
             for t in self.transitions:
                 if t.end == key:
-                    print(f"{t.start} -> {t.end}   ---   {t.start} -> {value}")
+                    #print(f"{t.start} -> {t.end}   ---   {t.start} -> {value}")
                     t.end = value
                 if t.start == key:
                     t.start = value
+        
+        self.__cleanStates()
+
+    def __minus_1_all_states_after(self, n):
+        for t in self.transitions:
+            if t.start > n:
+                t.start = t.start - 1
+            if t.end > n:
+                t.end = t.end - 1
+
+        for key, value in self.must_change_states.items():
+            if key > n:
+                key = key - 1
+            if value > n:
+                value = value - 1
+        
+        if self.start > n:
+            self.start = self.start - 1
+        if self.accept > n:
+            self.accept = self.accept - 1
+            
+            
+    def __cleanStates(self):
+        self.Q = self.Q - len(self.must_change_states)
+
+        for key in self.must_change_states:
+            self.__minus_1_all_states_after(key)
+
+            
+        
 
 
+    # This function check regex if there is "Union" operation it returns false else return true 
+    # and this meaning we can parse other operations.
 
-    def readyForConcanetion(self, regex):
+    def __IsThereAnyUnion(self, regex):
         p = 0
 
         for element in regex:
@@ -100,7 +149,8 @@ class formal_nfa:
         return True
 
 
-    def findBracketsStartPoint(self, regex, bracket):
+    # This function find "(" in regex if position of ")" is given.
+    def __findBracketsStartPoint(self, regex, bracket):
         regex = regex[0:bracket]
         p = -1
 
@@ -115,7 +165,9 @@ class formal_nfa:
 
         return -1
 
-    def find_transitions(self, start, end, regex):
+    # This is recursive function which find next transition.
+    
+    def __find_transitions(self, start, end, regex):
         t = transition(start, end, regex)
 
         #self.transitions.append(t)
@@ -154,34 +206,34 @@ class formal_nfa:
                     p = p - 1
                 
                 if(element == "|" and p == 0):
-                    self.find_transitions(t.start, t.end, t.regex[0:i])
-                    self.find_transitions(t.start, t.end, t.regex[i+1:])
+                    self.__find_transitions(t.start, t.end, t.regex[0:i])
+                    self.__find_transitions(t.start, t.end, t.regex[i+1:])
                     break
 
-                elif(i < len(regex) - 1 and self.readyForConcanetion(t.regex)  and p == 0):
+                elif(i < len(regex) - 1 and self.__IsThereAnyUnion(t.regex)  and p == 0):
                     if(t.regex[i+1] not in ["|", "*"]):
                         b = self.Q
                         self.Q = self.Q + 1
-                        self.find_transitions(t.start, b , t.regex[0:i+1])
-                        self.find_transitions(b , t.end, t.regex[i+1:])
+                        self.__find_transitions(t.start, b , t.regex[0:i+1])
+                        self.__find_transitions(b , t.end, t.regex[i+1:])
                         
                         break
 
 
-                elif(element == "*" and self.readyForConcanetion(t.regex) and p == 0):
+                elif(element == "*" and self.__IsThereAnyUnion(t.regex) and p == 0):
                     #print("in star")
                     point = i
 
                     if(t.regex[i-1] == ")"):
-                        point = self.findBracketsStartPoint(t.regex, i-1)
+                        point = self.__findBracketsStartPoint(t.regex, i-1)
 
                     if (t.start != t.end):
                         self.must_change_states[t.start] = t.end
-                    self.find_transitions(t.end, t.end, t.regex[point - 1: i])
+                    self.__find_transitions(t.end, t.end, t.regex[point - 1: i])
                     
                     
                     if i != len(t.regex) - 1:
-                        self.find_transitions(t.start, t.end, t.regex[0:point-1] + t.regex[i+1:])
+                        self.__find_transitions(t.start, t.end, t.regex[0:point-1] + t.regex[i+1:])
                     '''else:
                         if t.end == self.accept:
                             self.accept = t.start'''
@@ -193,14 +245,15 @@ class formal_nfa:
 
 
 
-#nfa = formal_nfa("1(1*01*01*)*")  #formal nfa 
+nfa = formal_nfa("(a|b)*aba")   
+
 
 
 """
 Düzeltilmesi gerekli:
---- Değişkenler anlamdırılmalı
---- Comment eklenmeli
---- Stateler estetik olarak düzeltilmeli
+--- Değişkenler anlamdırılmalı            .  In Process
+--- Comment eklenmeli                     .  In Process
+--- Stateler estetik olarak düzeltilmeli  .  OK
 
 
 
@@ -220,12 +273,3 @@ Testi geçemedi:
 ---
 
 """
-
-
-#print()
-#for a in nfa.transitions:
-    #a.print_t()
-
-#print(nfa.readyForConcanetion("1 (1* 01* 01*)*".replace(" ", "")))
-
-#nfa.print_nfa()
