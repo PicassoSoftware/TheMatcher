@@ -7,19 +7,15 @@ class State():
 
 class StateControl():
     def __init__(self):
-        self.allStatesForNfa = []
-        self.allStatesForDfa = []
+        self.allStates = []
+
 
     def addState(self, obj: State):
-        stateDictForNfa, stateDictForDfa = self.ready2Add(obj)
-        self.allStatesForDfa.append(stateDictForDfa)
-        self.allStatesForNfa.append(stateDictForNfa)
+        stateDict = self.ready2Add(obj)
+        self.allStates.append(stateDict)
 
 
     def ready2Add(self, obj: State):
-
-        #                       FOR NFA                         #
-        #########################################################
         stateDictForNfa = {}
         stateDictForNfa.update(
             {
@@ -28,23 +24,5 @@ class StateControl():
                 'char': obj.values
             }
         )
-        ##########################################################
 
-
-        #                        FOR DFA                         #
-        ##########################################################
-        stateDictForDfa = {}
-        stateProperties = dict(zip(obj.values, obj.next))
-        stateMood = obj.stateValue
-        stateDictForDfa.setdefault('state', stateMood)
-        stateDictForDfa.setdefault('properties', stateProperties)
-        '''
-            e.g.:
-                {'state': 0, 'properties': {'a': 0, 'b': 2}}
-                {'state': 1, 'properties': {'b': 2}}
-                {'state': 2, 'properties': {'c': 3}}
-                {'state': 3, 'properties': {'d': 0}}
-        '''
-        ###########################################################
-
-        return stateDictForNfa,stateDictForDfa
+        return stateDictForNfa
