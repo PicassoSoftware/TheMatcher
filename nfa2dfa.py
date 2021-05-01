@@ -1,86 +1,120 @@
 import reg2nfa
 
-regex = "sema"
 
-nfa = reg2nfa.formal_nfa(regex)
+class transition:
+    def __init__(self, start, end, regex):
+        self.start = start
+        self.end = end
+        self.regex = regex
 
 
-empty = 61
-used_language = []
-states = []
-table = []
-number_of_states =nfa.Q
+    # Print transition prettier.
+    def print_t(self):
+        print(f'\tq{self.start} -> q{self.end} when {self.regex} comes.')
 
-for c in regex:
-    if (c not in used_language) and (c not in ['(', '|', ')', '*']):
-        used_language.append(c)
 
-class state:
+class state:         #state object created
     def __init__(self, q, name):
         self.name = name
-        if type(q) == int :
+        if type(q) == int:
             self.q = [q]
-        else :
+        else:
             self.q = q
 
-      
         """endsleri tutuyor"""
 
 
-def  add_empty_row_to_table():
+class formal_dfa:
+    def __init__(self, regex):
+        self.regex = regex
+        self.nfa = reg2nfa.formal_nfa(regex)
+        self.empty = 61
+        self.used_language = []
+        self.states = []
+        self.table = []
+        self.transitions_for_sm = []
+        self.transitions_for_search = []
+        self.number_of_states = self.nfa.Q
+        self.create_table()
+        self.print_table()
 
-    row = []
-    for i in range (len(used_language)):
+    def find_transitions(self):
+        for start, row in enumerate(self.table):
+            for regexnum,end in enumerate(row):
 
-        row.append(empty)
+                t = transition(start,end,self.used_language[regexnum])
+                self.transitions_for_sm.append(t)
+                if end != self.empty:
+                    self.transitions_for_search.append(t)
 
-    table.append(row)
 
+    def add_empty_row_to_table(self):
+        row = []
+        for i in range(len(self.used_language)):
+            row.append(self.empty)
 
-for i in range(nfa.Q):
-    s =state(i,i)
-    states.append(s)
-    add_empty_row_to_table()
+        self.table.append(row)
 
-for current_state in states:
-    for i, char in enumerate(used_language):
-        for transition in nfa.transitions:
-            if transition.start in current_state.q and char == transition.regex:
-                if table[current_state.name][i] == 61:
-                    thirdD = []
-                    thirdD.append(transition.end)
-                    table[current_state.name][i] = thirdD
-                else:
-                    table[current_state.name][i].append(transition.end)
-
-    for i, thirdD in enumerate(table[current_state.name]):
-        find =0
-        for control_state in states :
-            if thirdD==control_state.q:
-                table[current_state.name][i]=control_state.name
-                find=1
-                break
-            elif thirdD == 61 :
-                find = 1
-                break
-
-        if find == 0 :
-            new_state = state(thirdD,number_of_states)
-            states.append(new_state)
-            add_empty_row_to_table()
-            table[current_state.name][i] = number_of_states
-            number_of_states = number_of_states + 1
-
-def print_table():
-    print('  |',end=' ')
-    for char in used_language:
-        print(char,end=' ')
-    print('')
-    for i, row in enumerate(table) :
-        print(chr(i+65),end =' | ')
-
-        for unnamed_states in row:
-            print(chr(unnamed_states + 65), end=' ')
+    def print_table(self):
+        print('  |', end=' ')
+        for char in self.used_language:
+            print(char, end=' ')
         print('')
+        for i, row in enumerate(self.table):
+            print(chr(i + 65), end=' | ')
 
-print_table()
+            for unnamed_states in row:
+                print(chr(unnamed_states + 65), end=' ')
+            print('')
+
+
+    def find_used_language(self):
+        for c in self.regex:
+            if (c not in self.used_language) and (c not in ['(', '|', ')', '*']):
+                self.used_language.append(c)
+
+
+    def create_table(self):
+
+        self.find_used_language()
+
+
+        for i in range(self.nfa.Q):
+            s = state(i, i)
+            self.states.append(s)
+            self.add_empty_row_to_table()
+
+        for current_state in self.states:
+            for i, char in enumerate(self.used_language):
+                for transition in self.nfa.transitions:
+                    if transition.start in current_state.q and char == transition.regex:
+                        if self.table[current_state.name][i] == 61:
+                            thirdD = []
+                            thirdD.append(transition.end)
+                            self.table[current_state.name][i] = thirdD
+                        else:
+                            self.table[current_state.name][i].append(transition.end)
+
+            for i, thirdD in enumerate(self.table[current_state.name]):
+                find = 0
+                for control_state in self.states:
+                    if thirdD == control_state.q:
+                        self.table[current_state.name][i] = control_state.name
+                        find = 1
+                        break
+                    elif thirdD == 61:
+                        find = 1
+                        break
+
+                if find == 0:
+                    new_state = state(thirdD, number_of_states)
+                    self.states.append(new_state)
+                    self.add_empty_row_to_table()
+                    self.table[current_state.name][i] = number_of_states
+                    number_of_states = number_of_states + 1
+
+x=formal_dfa('erkin')
+
+x.find_transitions()
+for i in x.transitions_for_search:
+    i.print_t()
