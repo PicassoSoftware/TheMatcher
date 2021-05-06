@@ -36,7 +36,6 @@ class formal_dfa:
         self.transitions_for_search = []
         self.number_of_states = self.nfa.Q
         self.create_table()
-        self.print_table()
 
     def find_transitions(self):
         for start, row in enumerate(self.table):
@@ -113,8 +112,3 @@ class formal_dfa:
                     self.table[current_state.name][i] = number_of_states
                     number_of_states = number_of_states + 1
 
-x=formal_dfa('erkin')
-
-x.find_transitions()
-for i in x.transitions_for_search:
-    i.print_t()
