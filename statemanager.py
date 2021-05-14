@@ -1,5 +1,5 @@
 from state import State, StateControl
-from reg2nfa import formal_nfa
+from drawFsm import FsmDrawer
 
 class CheckStateManager:
     def __init__(self, automataController):
@@ -7,6 +7,13 @@ class CheckStateManager:
         self.stateList = []
         self.expectedValueList = []
         self.nextStateList = []
+        self.fsmDrawer = FsmDrawer(self.automataController)
+        self.transitionDict = {}
+
+
+        self.tempState = -1
+        self.tempChar = ""
+        
 
         # Get all lists values.
         self.getLists()
@@ -59,12 +66,24 @@ class CheckStateManager:
 
         try:
             for item in self.statesControl.allStates:
+
                 if string[index] in item.get('char') and dfa == item.get('state'):
-                    for value in item.get('next'):
-                        possibleStates.append(value)
+                    for i in range(len(item.get('next'))):
+                        if(item.get('char')[i] == string[index]):
+                            if(dfa != self.tempState or (dfa == self.tempState and string[index] != self.tempChar)):
+                                # Connection to drawFsm
+                                currentState = str(item.get('state'))
+                                self.fsmDrawer.click(string[index],currentState)
+                                self.tempState = item.get('state')
+                                self.tempChar = string[index]
+
+                            possibleStates.append(item.get('next')[i])
+
+
             # Wrong value or wrong state.
             if not possibleStates:
                 return False
+
         except IndexError:
             # End of the process. That means out of the index range.
             if dfa == self.automataController.accept:
@@ -80,13 +99,3 @@ class CheckStateManager:
         return False
 
 
-
-
-if __name__ == "__main__":
-    nfaController = formal_nfa('(ab|a)*')
-    controlManager = CheckStateManager(nfaController)
-
-    stringList = ['abab','a','aaa','sırat','ba','ab','baba']
-    for string in stringList:
-        if controlManager.checkString(string):
-            print('{0} accepted.'.format(string))
