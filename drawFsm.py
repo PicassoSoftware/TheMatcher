@@ -39,7 +39,7 @@ class FsmDrawer():
         self.clearReference()
         
     def clearReference(self):
-        time.sleep(2)
+        time.sleep(1)
         self.fsm.clear()
         self.createReference()
         
