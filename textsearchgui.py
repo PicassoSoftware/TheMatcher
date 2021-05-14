@@ -1,14 +1,14 @@
 import sys
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QTextCharFormat, QTextCursor, QColor
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QTextEdit)
+from PyQt5.QtWidgets import (QApplication, QWidget, QTextEdit)
 import reg2nfa
 import statemanager
 import time
 
 
 # txt = "1001 10000 10000000 100000000 000000000000 1010111101 101001 1001001 1001010011 0101101 001 10100 1010100 0100001 0000001 000000"
-class TextEdit(QMainWindow):
+class TextEdit(QWidget):
     def __init__(self, regex=' ', txt=" ", parent=None):
         super(TextEdit, self).__init__(parent)
 
@@ -39,7 +39,7 @@ class TextEdit(QMainWindow):
                     self.highlight(start, i - start, 3)
                 start = i + 1
 
-        self.setCentralWidget(self.textEdit)
+
 
     def highlight(self, start, n, col):
         cursor = self.textEdit.textCursor()
