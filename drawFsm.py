@@ -1,3 +1,4 @@
+from typing import Sized
 from graphviz import Digraph
 import time
 from showFsm import Window
@@ -11,19 +12,20 @@ class FsmDrawer():
     
     def createReference(self):
         self.fsm = Digraph("FSM","FSMtext.txt",format="svg")
-        self.fsm.attr("node" , shape = "doublecircle") #fontsize can be resize
-        self.fsm.attr(rankdir = "LR")
+        self.fsm.attr("node" , shape = "doublecircle",color="black",fontsize="20") #fontsize can be resize 
+        self.fsm.attr(rankdir = "LR",bgcolor="transparent",size="9,9!")
         self.fsm.node(str(self.formalDefinition.accept))
         self.img = Window(self.label)
         print(str(self.formalDefinition.accept))
 
     def drawFsm(self,fsmStart,fsmNext,fsmLabel):
-        self.fsm.attr("node" ,shape = "circle")
-        self.fsm.edge(fsmStart,fsmNext,label = fsmLabel)
+        self.fsm.attr("node" ,shape = "circle",color="black",fontcolor = "black")
+        self.fsm.edge(fsmStart,fsmNext,label = fsmLabel,color="blue",fontcolor = "blue")
+
 
     def drawFsmColored(self,fsmStart,fsmNext,fsmLabel):
-        self.fsm.attr("node",shape = "circle")
-        self.fsm.edge(fsmStart,fsmNext,fontcolor = "red",label = fsmLabel)
+        self.fsm.attr("node",shape = "circle",color="black",fontcolor = "black")
+        self.fsm.edge(fsmStart,fsmNext,fontcolor = "red",label = fsmLabel,color="red")
   
 
     def click(self,char,first):        
