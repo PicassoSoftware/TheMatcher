@@ -28,14 +28,17 @@ class formal_dfa:
     def __init__(self, regex):
         self.regex = regex
         self.nfa = reg2nfa.formal_nfa(regex)
+        self.accept = self.nfa.accept
+        self.start = self.nfa.start
         self.empty = 61
         self.used_language = []
         self.states = []
         self.table = []
         self.transitions_for_sm = []
-        self.transitions_for_search = []
+        self.transitions = []
         self.number_of_states = self.nfa.Q
         self.create_table()
+        self.find_transitions()
 
     def find_transitions(self):
         for start, row in enumerate(self.table):
@@ -44,7 +47,7 @@ class formal_dfa:
                 t = transition(start,end,self.used_language[regexnum])
                 self.transitions_for_sm.append(t)
                 if end != self.empty:
-                    self.transitions_for_search.append(t)
+                    self.transitions.append(t)
 
 
     def add_empty_row_to_table(self):
@@ -106,9 +109,9 @@ class formal_dfa:
                         break
 
                 if find == 0:
-                    new_state = state(thirdD, number_of_states)
+                    new_state = state(thirdD, self.number_of_states)
                     self.states.append(new_state)
                     self.add_empty_row_to_table()
-                    self.table[current_state.name][i] = number_of_states
-                    number_of_states = number_of_states + 1
+                    self.table[current_state.name][i] = self.number_of_states
+                    self.number_of_states = self.number_of_states + 1
 

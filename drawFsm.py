@@ -3,7 +3,8 @@ import time
 from showFsm import Window
 
 class FsmDrawer():
-    def __init__(self,formalDefinition): 
+    def __init__(self,formalDefinition, label): 
+        self.label = label
         self.formalDefinition = formalDefinition
         self.createReference()
        
@@ -13,7 +14,7 @@ class FsmDrawer():
         self.fsm.attr("node" , shape = "doublecircle") #fontsize can be resize
         self.fsm.attr(rankdir = "LR")
         self.fsm.node(str(self.formalDefinition.accept))
-        self.img = Window()
+        self.img = Window(self.label)
         print(str(self.formalDefinition.accept))
 
     def drawFsm(self,fsmStart,fsmNext,fsmLabel):

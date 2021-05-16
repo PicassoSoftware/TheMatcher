@@ -2,12 +2,13 @@ from state import State, StateControl
 from drawFsm import FsmDrawer
 
 class CheckStateManager:
-    def __init__(self, automataController):
+    def __init__(self, automataController, label):
+        self.label = label
         self.automataController = automataController
         self.stateList = []
         self.expectedValueList = []
         self.nextStateList = []
-        self.fsmDrawer = FsmDrawer(self.automataController)
+        self.fsmDrawer = FsmDrawer(self.automataController, label)
         self.transitionDict = {}
 
 
@@ -54,7 +55,7 @@ class CheckStateManager:
             for item in self.nextStateList[i]:
                 newState.next.append(item)
             newState.stateValue = self.stateList[i]
-            self.statesControl.addState(newState)
+            self.statesControl.addState(newState) 
             del newState
 
     def checkString(self,string):

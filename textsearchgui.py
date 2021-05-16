@@ -3,42 +3,47 @@ from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QTextCharFormat, QTextCursor, QColor
 from PyQt5.QtWidgets import (QApplication, QWidget, QTextEdit)
 import reg2nfa
+import nfa2dfa
 import statemanager
 import time
 
 
 # txt = "1001 10000 10000000 100000000 000000000000 1010111101 101001 1001001 1001010011 0101101 001 10100 1010100 0100001 0000001 000000"
 class TextEdit(QWidget):
-    def __init__(self, regex=' ', txt=" ", parent=None):
+    def __init__(self, regex=' ', txt=" ", textEdit = None, fa = False, label = None, parent=None):
         super(TextEdit, self).__init__(parent)
 
         self.regex = regex
         self.txt = txt
+        self.textEdit = textEdit
 
-        self.textEdit = QTextEdit(self)
-        self.textEdit.setReadOnly(True)
-        self.textEdit.setText(txt)
-
-        self.setGeometry(500, 300, 600, 200)
-        self.textEdit.resize(600, 200)
+        #self.textEdit.setReadOnly(True)
+        #self.textEdit.setText(txt)
+        #self.setGeometry(500, 300, 600, 200)
+        #self.textEdit.resize(600, 200)
 
         self.wait(0.2)
 
-        nfaController = reg2nfa.formal_nfa(self.regex)
-        controlManager = statemanager.CheckStateManager(nfaController)
+        if not fa:
+            nfaController = reg2nfa.formal_nfa(self.regex)
+        else:
+            nfaController = nfa2dfa.formal_dfa(self.regex)
 
+        self.controlManager = statemanager.CheckStateManager(nfaController, label)
+
+
+    def run(self):
         start = 0
-        for i, char in enumerate(txt):
+        for i, char in enumerate(self.txt):
             if char == " ":
                 self.highlight(start, i - start, 2)
                 self.wait(0.4)
-                print(txt[start: i])
-                if controlManager.checkString(txt[start: i]):
+                print(self.txt[start: i])
+                if self.controlManager.checkString(self.txt[start: i]):
                     self.highlight(start, i - start, 1)
                 else:
                     self.highlight(start, i - start, 3)
                 start = i + 1
-
 
 
     def highlight(self, start, n, col):
@@ -61,15 +66,16 @@ class TextEdit(QWidget):
         cursor.mergeCharFormat(fmt)
 
     def wait(self, second):
-        self.show()
         QCoreApplication.processEvents() #Belirtilen bayraklara göre çağıran iş parçacığı için bazı bekleyen olayları işleyen fonk.
         time.sleep(second)
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    textdit = QTextEdit()
 
-    textEdit = TextEdit('(ab)*', 'aba abbbaa abaaa aba ab ')
+    textEdit = TextEdit('(ab)*', 'aba abbbaa abaaa aba ab ', textdit)
+    textEdit.run()
     textEdit.show()
 
     sys.exit(app.exec_())
