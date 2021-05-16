@@ -14,7 +14,7 @@ class Window(QWidget):
 	def loadImage(self):
 		self.acceptDrops()
 		
-		self.pixmap = QPixmap('fsm.gv.svg').scaled(640,480)
+		self.pixmap = QPixmap('fsm.gv.svg')
 			
 		
 		self.label.setPixmap(self.pixmap)

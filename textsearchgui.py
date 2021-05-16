@@ -10,19 +10,16 @@ import time
 
 # txt = "1001 10000 10000000 100000000 000000000000 1010111101 101001 1001001 1001010011 0101101 001 10100 1010100 0100001 0000001 000000"
 class TextEdit(QWidget):
-    def __init__(self, regex=' ', txt=" ", textEdit = None, fa = False, label = None, parent=None):
+    def __init__(self, regex=' ', txt=" ", textEdit = None, fa = False, timer = 0.4, label = None, parent=None):
         super(TextEdit, self).__init__(parent)
 
+        self.stop = False
         self.regex = regex
         self.txt = txt
         self.textEdit = textEdit
+        self.timer = timer
 
-        #self.textEdit.setReadOnly(True)
-        #self.textEdit.setText(txt)
-        #self.setGeometry(500, 300, 600, 200)
-        #self.textEdit.resize(600, 200)
-
-        self.wait(0.2)
+        self.wait(self.timer)
 
         if not fa:
             nfaController = reg2nfa.formal_nfa(self.regex)
@@ -35,15 +32,18 @@ class TextEdit(QWidget):
     def run(self):
         start = 0
         for i, char in enumerate(self.txt):
+            if self.stop:
+                break
             if char == " ":
                 self.highlight(start, i - start, 2)
-                self.wait(0.4)
+                self.wait(self.timer)
                 print(self.txt[start: i])
                 if self.controlManager.checkString(self.txt[start: i]):
                     self.highlight(start, i - start, 1)
                 else:
                     self.highlight(start, i - start, 3)
                 start = i + 1
+        
 
 
     def highlight(self, start, n, col):

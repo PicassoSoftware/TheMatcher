@@ -2,23 +2,21 @@ import sys
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
-from statemanager import CheckStateManager
-import reg2nfa
 from textsearchgui import TextEdit
-from showFsm import Window
-from graphviz import Digraph
 
 
 class Regex(QWidget):
 
     def __init__(self):
         super(Regex, self).__init__()
-        self.saveButton = QPushButton('Save')
+        self.startButton = QPushButton('Start')
+        self.stopButton = QPushButton('Stop')
         self.dfaButton = QPushButton('DFA')
         self.nfaButton = QPushButton('NFA')
         self.nfaButton.setFixedSize(100, 30)
         self.dfaButton.setFixedSize(100, 30)
-        self.saveButton.setFixedSize(100, 30)
+        self.startButton.setFixedSize(100, 30)
+        self.stopButton.setFixedSize(100, 30)
 
         self.initUI()
 
@@ -29,17 +27,13 @@ class Regex(QWidget):
         self.lineEdit = QLineEdit(self.text)
         self.textEdit = QTextEdit()
         self.label = QLabel(self)
-        #self.searchBox.setReadOnly(True)
-        
-        #self.Window = QWidget()
-        #self.ornek = QTextEdit()
-
 
         self.txt = QTextEdit()
 
         self.mainLayout = QHBoxLayout()
         self.regexLayout = QHBoxLayout()
         self.metinLayout = QHBoxLayout()
+        self.ssLayout = QHBoxLayout()
         self.layout1 = QVBoxLayout()  #sağ taraf için layout oluşturma
         self.layout2 = QVBoxLayout()  #sol taraf  için layout oluşturma
         self.nfaDfaLayout = QHBoxLayout()
@@ -53,7 +47,10 @@ class Regex(QWidget):
         self.layout2.addLayout(self.regexLayout)
         self.layout2.addWidget(self.text)
         self.layout2.addWidget(self.textEdit)
-        self.layout2.addWidget(self.saveButton)
+        self.layout2.addLayout(self.ssLayout)
+        self.ssLayout.addWidget(self.startButton)
+        self.ssLayout.addWidget(self.stopButton)
+        self.ssLayout.addStretch()
 
         self.nfaDfaLayout.addStretch()
         self.nfaDfaLayout.addWidget(self.dfaButton)
@@ -69,105 +66,44 @@ class Regex(QWidget):
         self.dfaButton.clicked.connect(self.select)
         self.nfaButton.clicked.connect(self.select)
 
-        # mainLayout = QHBoxLayout()
-        #
-        #
-        # qvbox = QVBoxLayout()
-        # qvbox.setSpacing(10)
-        #
-        # qvbox.addWidget(title)
-        # qvbox.addWidget(self.lineEdit)
-        #
-        # qvbox.addWidget(text)
-        # qvbox.addWidget(self.textEdit)
-        #
-        #
-        # qvbox.addWidget(self.savebtn)
-        self.saveButton.clicked.connect(self.saveText)
-        self.saveButton.clicked.connect(self.saveRegex)
-        self.saveButton.clicked.connect(self.search)
-        #
-        # qvbox.addWidget(self.dfabtn)
-        # self.dfabtn.setAccessibleName("DFA")
-        # self.dfabtn.clicked.connect(self.select)
-        # name = self.dfabtn.accessibleName()
-        #
-        # #qvbox.addWidget(self.fsm, 1, 6, 6, 1)
-        # #qvbox.addLayout()
-        #
-        # qvbox.addWidget(self.txt)
+        self.startButton.clicked.connect(self.search)
+        self.stopButton.clicked.connect(self.stop)
 
         self.setLayout(self.mainLayout)
 
         self.setGeometry(50, 50, 1200, 500)
         self.setWindowTitle(' Giriş ')
 
-    def saveRegex(self):
-        self.regex = self.lineEdit.text()
-
     def search(self):
         self.textEdit.setReadOnly(True)
-        #self.textEdit.setText(self.textEdit.toPlainText())
-
+ 
         if self.nfaButton.isEnabled():
             fa = False
         else:
             fa = True
-
-
-        #self.fsm = Digraph("FSM","FSMtext.txt",format="svg")   
-        self.src = TextEdit(self.lineEdit.text(), self.textEdit.toPlainText() + " ", self.textEdit, fa, self.label)
+  
+        self.src = TextEdit(self.lineEdit.text(), self.textEdit.toPlainText() + " ", self.textEdit, fa, 0.4, self.label)
         self.src.run()
+
+    def stop(self):
+        self.src.stop = True
         self.textEdit.setReadOnly(False)
-
-      # self.deneme.show()
-    
-        
-    def saveText(self):
-        with open('text.txt', 'w') as f:
-            url_text = self.textEdit.toPlainText()
-            f.write(url_text)
-
-
-
-    # def select(self):
-    #     if self.dfabtn.accessibleName() == 'NFA':
-    #         self.dfabtn.setAccessibleName('DFA')
-    #         self.dfabtn.setText('DFA')
-    #
-    #     else:
-    #         self.dfabtn.setAccessibleName('NFA')
-    #         self.dfabtn.setText('NFA')
 
     def select(self):
         if self.sender().text() == 'DFA':
             self.dfaButton.setEnabled(False)
             self.nfaButton.setEnabled(True)
-            if (not self.dfaButton.isEnabled()):
-                print('DFA seçildi.')
         else:
             self.nfaButton.setEnabled(False)
             self.dfaButton.setEnabled(True)
-            if (not self.nfaButton.isEnabled()):
-                print('Nfa seçildi.')
-    
-    def loadImage(self):
-        self.acceptDrops()
 
-        self.pixmap = QPixmap('fsm.gv.svg').scaled(640,480)
-
-        self.label.setPixmap(self.pixmap)
-        self.label.resize(self.pixmap.width(),self.pixmap.height())
-        QCoreApplication.processEvents()
 
 def main():
     app = QApplication(sys.argv)
     ex = Regex()
     ex.show()
 
-
     sys.exit(app.exec_())
-    print("hatice")
 
 
 if __name__ == '__main__':
