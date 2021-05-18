@@ -12,9 +12,14 @@ class FsmDrawer():
     
     def createReference(self):
         self.fsm = Digraph("FSM","FSMtext.txt",format="svg")
-        self.fsm.attr("node" , shape = "doublecircle",color="black",fontsize="20") #fontsize can be resize 
+        self.fsm.attr("node" , shape = "doublecircle",color="black",fontsize="10") #fontsize can be resize 
         self.fsm.attr(rankdir = "LR",bgcolor="transparent",size="9,9!")
-        self.fsm.node(str(self.formalDefinition.accept))
+        # self.fsm.node(str(self.formalDefinition.accept))
+        try:
+            for item in self.formalDefinition.accept:
+                self.fsm.node(str(item))
+        except:
+            self.fsm.node(str(self.formalDefinition.accept))
         self.img = Window(self.label)
         print(str(self.formalDefinition.accept))
 
@@ -28,7 +33,7 @@ class FsmDrawer():
         self.fsm.edge(fsmStart,fsmNext,fontcolor = "red",label = fsmLabel,color="red")
   
 
-    def click(self,char,first):        
+    def click(self,char,first):       
         for a in self.formalDefinition.transitions:
             if((str(a.regex) == char) & (str(a.start) == first) ):
                 self.drawFsmColored(str(a.start),str(a.end),str(a.regex))
@@ -36,9 +41,7 @@ class FsmDrawer():
                 self.drawFsm(str(a.start),str(a.end),str(a.regex))  
 
         self.fsm.render(view=False)
-
-
-        
+  
         self.clearReference()
         
     def clearReference(self):
