@@ -13,7 +13,7 @@ class Window(QWidget):
 	def loadImage(self):
 		self.acceptDrops()
 		
-		self.pixmap = QPixmap('fsm.svg')
+		self.pixmap = QPixmap('fsm.txt.svg')
 			
 		self.label.setPixmap(self.pixmap)
 		self.label.resize(self.pixmap.width(),
