@@ -14,7 +14,7 @@ class FsmDrawer():
         self.fsm = Digraph("FSM","FSMtext.txt",format="svg")
         self.fsm.attr("node" , shape = "doublecircle",color="black",fontsize="10") #fontsize can be resize 
         self.fsm.attr(rankdir = "LR",bgcolor="transparent",size="9,9!")
-        # self.fsm.node(str(self.formalDefinition.accept))
+
         try:
             for item in self.formalDefinition.accept:
                 self.fsm.node(str(item))
@@ -40,6 +40,9 @@ class FsmDrawer():
             else:
                 self.drawFsm(str(a.start),str(a.end),str(a.regex))  
 
+        self.fsm.attr("node",shape="plaintext")      
+        self.fsm.edge("",str(self.formalDefinition.start))
+        
         self.fsm.render(view=False)
   
         self.clearReference()
