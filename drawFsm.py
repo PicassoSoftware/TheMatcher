@@ -11,7 +11,7 @@ class FsmDrawer():
        
     
     def createReference(self):
-        self.fsm = Digraph("FSM",format="svg",filename="fsm")
+        self.fsm = Digraph("FSM",format="svg",filename="fsm.txt")
         self.fsm.attr("node" , shape = "doublecircle",color="black",fontsize="10") #fontsize can be resize 
         self.fsm.attr(rankdir = "LR",bgcolor="transparent",size="9,9!")
 
