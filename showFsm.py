@@ -4,7 +4,6 @@ from PyQt5.QtGui import QPixmap
 import sys
 import time
 
-
 class Window(QWidget): 
 	def __init__(self, label = None):
 		super().__init__()
@@ -14,9 +13,8 @@ class Window(QWidget):
 	def loadImage(self):
 		self.acceptDrops()
 		
-		self.pixmap = QPixmap('fsm.gv.svg')
+		self.pixmap = QPixmap('fsm.svg')
 			
-		
 		self.label.setPixmap(self.pixmap)
 		self.label.resize(self.pixmap.width(),
 						self.pixmap.height())
