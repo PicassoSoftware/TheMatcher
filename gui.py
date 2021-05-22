@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtCore import QCoreApplication, QFile
-from PyQt5.QtGui import QPalette, QPixmap
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont,  QWheelEvent
 from textsearchgui import TextEdit
@@ -47,11 +47,8 @@ class Regex(QWidget):
         #self.textEdit.setFixedSize(580, 400)
         self.label = QLabel(self)
         #self.label.setFixedSize(600, 420)
+        self.text.setFont(QFont('Arial', 10))
         self.txt = QTextEdit()
-
-        self.label.setBackgroundRole(QPalette.Base)
-        self.label.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        self.label.setScaledContents(True)
 
         self.mainLayout = QHBoxLayout()
         self.regexLayout = QHBoxLayout()
@@ -134,7 +131,7 @@ class Regex(QWidget):
 
     def open(self):
         options = QFileDialog.Options()
-
+        
         fileName, _ = QFileDialog.getOpenFileName(self, 'QFileDialog.getOpenFileName()', '',
                                                   'Text (*.txt)', options=options)
         
