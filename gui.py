@@ -1,3 +1,4 @@
+#Pycharm için pip install PyQt5 yapılmalıdır.
 import sys
 from PyQt5.QtCore import QCoreApplication, QFile
 from PyQt5.QtGui import QPixmap
@@ -94,8 +95,8 @@ class Regex(QWidget):
 
         self.setLayout(self.mainLayout)
 
-        self.setGeometry(50, 50, 1200, 500)
-        self.setWindowTitle(' Giriş ')
+        self.setFixedSize(1600, 700)
+        self.setWindowTitle(' The Matcher  ')
 
     def search(self):
         self.startButton.setStyleSheet("background-color : rgba(120, 123, 147)")
