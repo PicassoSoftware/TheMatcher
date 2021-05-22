@@ -6,6 +6,7 @@ import reg2nfa
 import nfa2dfa
 import statemanager
 import time
+import os
 
 
 # txt = "1001 10000 10000000 100000000 000000000000 1010111101 101001 1001001 1001010011 0101101 001 10100 1010100 0100001 0000001 000000"
@@ -43,18 +44,19 @@ class TextEdit(QWidget):
                 else:
                     self.highlight(start, i - start, 3)
                 start = i + 1
+        os.remove("fsm.txt.svg") #burda sefanın svg lerini kapandığında siliyor.
         
 
 
     def highlight(self, start, n, col):
         cursor = self.textEdit.textCursor()
-        clr = QColor(0, 0, 0)
+        clr = QColor(255,255,255)
         if col == 1:
             clr = QColor(0, 255, 0)
         elif col == 2:
             clr = QColor(255, 255, 0)
         elif col == 3:
-            clr = QColor(0, 0, 0)
+            clr = QColor(255,255,255)
 
         # metin rengi
         fmt = QTextCharFormat()
