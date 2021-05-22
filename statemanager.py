@@ -62,15 +62,15 @@ class CheckStateManager:
        return self.isItAcceptable(string,self.automataController.start)
 
 
-    def isItAcceptable(self,string,dfa,index=0):
+    def isItAcceptable(self,string,stateValue,index=0):
         possibleStates = []
 
         try:
             for item in self.statesControl.allStates:
-                if string[index] in item.get('char') and dfa == item.get('state'):
+                if string[index] in item.get('char') and stateValue == item.get('state'):
                     for i in range(len(item.get('next'))):
                         if(item.get('char')[i] == string[index]):
-                            if(dfa != self.tempState or (dfa == self.tempState and string[index] != self.tempChar)):
+                            if(stateValue != self.tempState or (stateValue == self.tempState and string[index] != self.tempChar)):
                                 # Connection to drawFsm
                                 currentState = str(item.get('state'))
                                 self.fsmDrawer.click(string[index],currentState)
@@ -87,17 +87,17 @@ class CheckStateManager:
         except IndexError:
             # End of the process. That means out of the index range.
             try:
-                if dfa in self.automataController.accept:
+                if stateValue in self.automataController.accept:
                     return True
             except:
-                if dfa == self.automataController.accept:
+                if stateValue == self.automataController.accept:
                     return True
             else:
                 return False
 
-        for dfaValue in possibleStates:
+        for stateValue in possibleStates:
             # When the process is over, if True returns, that string is right.
-            if(self.isItAcceptable(string,dfaValue,index+1)):
+            if(self.isItAcceptable(string,stateValue,index+1)):
                 return True
         # if it's not.
         return False
