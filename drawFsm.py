@@ -1,4 +1,4 @@
-from typing import Sized
+#Pycharmda hata alınıyorsa pip insall graphviz yapılmadır.
 from graphviz import Digraph
 import time
 from showFsm import Window
@@ -50,4 +50,3 @@ class FsmDrawer():
         time.sleep(1)
         self.fsm.clear()
         self.createReference()
-        
