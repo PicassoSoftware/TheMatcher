@@ -47,7 +47,6 @@ class Regex(QWidget):
         #self.textEdit.setFixedSize(580, 400)
         self.label = QLabel(self)
         #self.label.setFixedSize(600, 420)
-        self.text.setFont(QFont('Arial', 10))
         self.txt = QTextEdit()
 
         self.mainLayout = QHBoxLayout()
@@ -102,9 +101,9 @@ class Regex(QWidget):
         self.textEdit.setReadOnly(True)
 
         if self.nfaButton.isEnabled():
-            fa = False
-        else:
             fa = True
+        else:
+            fa = False
 
         self.src = TextEdit(self.lineEdit.text(), self.textEdit.toPlainText() + " ", self.textEdit, fa, 0.4, self.label)
         self.src.run()
