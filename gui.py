@@ -11,18 +11,20 @@ class Regex(QWidget):
     def __init__(self):
         super(Regex, self).__init__()
 
-        self.setStyleSheet((" background-color: \
-                               rgba(44, 47, 51); \
-                               color: rgba(180,180,180); \
-                               border-style: solid;\
-                               border-radius: 6px; \
-                               border-width: 1px; \
-                               border-color: \
-                               rgba(0,0,0);"))
+        self.setStyleSheet(("""background-color: 
+                               rgba(35,39,42); 
+                               color: rgba(153,170,181); 
+                               border-style: solid;
+                               border-radius: 6px;
+                               border-width: 3px; 
+                               border-color: 
+                               rgba(68,68,68);"""))
 
         self.startButton = QPushButton('Start')
         self.stopButton = QPushButton('Stop')
         self.dfaButton = QPushButton('DFA')
+        self.dfaButton.setEnabled(False)
+        self.dfaButton.setStyleSheet("background-color :rgba(120, 123, 147) ")
         self.nfaButton = QPushButton('NFA')
         self.fileButton = QPushButton('Open File')
         self.nfaButton.setFixedSize(80, 30)
@@ -59,14 +61,14 @@ class Regex(QWidget):
 
         self.regexLayout.addWidget(self.title)
         self.regexLayout.addWidget(self.lineEdit)
+        self.regexLayout.addWidget(self.fileButton)
 
         self.metinLayout.addWidget(self.text, 0, 0, 1, 1)
         self.metinLayout.addWidget(self.textEdit, 0, 1, 5, 3)
 
         self.layout2.addLayout(self.regexLayout)
         self.layout2.addLayout(self.metinLayout)
-        self.layout2.addLayout(self.ssLayout)
-        self.ssLayout.addWidget(self.fileButton)
+        self.layout2.addLayout(self.nfaDfaLayout)
         self.ssLayout.addStretch()
         self.ssLayout.addWidget(self.startButton)
         self.ssLayout.addWidget(self.stopButton)
@@ -78,7 +80,7 @@ class Regex(QWidget):
         self.nfaDfaLayout.addStretch()
 
         self.layout1.addWidget(self.label)
-        self.layout1.addLayout(self.nfaDfaLayout)
+        self.layout1.addLayout(self.ssLayout)
 
         self.mainLayout.addLayout(self.layout2)
         self.mainLayout.addLayout(self.layout1)
@@ -105,7 +107,7 @@ class Regex(QWidget):
         else:
             fa = False
 
-        self.src = TextEdit(self.lineEdit.text(), self.textEdit.toPlainText() + " ", self.textEdit, fa, 0.4, self.label)
+        self.src = TextEdit(self.lineEdit.text(), self.textEdit.toPlainText()+" ", self.textEdit, fa, 0.4, self.label)
         self.src.run()
 
     def stop(self):
@@ -113,8 +115,6 @@ class Regex(QWidget):
         self.textEdit.setReadOnly(False)
         self.stopButton.setStyleSheet("background-color : rgba(120, 123, 147)")
         self.startButton.setStyleSheet('background-color: None')
-        self.dfaButton.setStyleSheet('background-color: None')
-        self.nfaButton.setStyleSheet('background-color: None')
 
     def select(self):
         if self.sender().text() == 'DFA':
