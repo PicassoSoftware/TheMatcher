@@ -67,7 +67,6 @@ class CheckStateManager:
 
         try:
             for item in self.statesControl.allStates:
-
                 if string[index] in item.get('char') and dfa == item.get('state'):
                     for i in range(len(item.get('next'))):
                         if(item.get('char')[i] == string[index]):
@@ -87,8 +86,12 @@ class CheckStateManager:
 
         except IndexError:
             # End of the process. That means out of the index range.
-            if dfa == self.automataController.accept:
-                return True
+            try:
+                if dfa in self.automataController.accept:
+                    return True
+            except:
+                if dfa == self.automataController.accept:
+                    return True
             else:
                 return False
 

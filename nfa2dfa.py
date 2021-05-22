@@ -34,18 +34,49 @@ class formal_dfa:
         self.used_language = []
         self.states = []
         self.table = []
-        self.transitions_for_sm = []
         self.transitions = []
         self.number_of_states = self.nfa.Q
         self.create_table()
         self.find_transitions()
+        self.optimize()
+
+    def optimize(self):
+        ends = [t.end for t in self.transitions]
+
+        for q in range(self.number_of_states):
+            if q not in ends and q != self.start:
+
+                for t in self.transitions:
+                    if t.start == q:
+                        self.transitions.remove(t)
+
+                        self.number_of_states -= 1
+
+                        for t in self.transitions:
+                            if t.start > q:
+                                t.start = t.start - 1
+                            if t.end > q:
+                                t.end = t.end - 1
+
+                        if self.start > q:
+                            self.start = self.start - 1
+
+                        for i, a in enumerate(self.accept):    
+                            if a > q:
+                                self.accept[i] -= 1
+
+                        self.optimize()   
+                        break
+                break
+            
+              
+
 
     def find_transitions(self):
         for start, row in enumerate(self.table):
             for regexnum,end in enumerate(row):
 
                 t = transition(start,end,self.used_language[regexnum])
-                self.transitions_for_sm.append(t)
                 if end != self.empty:
                     self.transitions.append(t)
 
@@ -109,9 +140,17 @@ class formal_dfa:
                         break
 
                 if find == 0:
+                    if any([x in self.accept for x in thirdD]):
+                        self.accept.append(self.number_of_states)
                     new_state = state(thirdD, self.number_of_states)
                     self.states.append(new_state)
                     self.add_empty_row_to_table()
                     self.table[current_state.name][i] = self.number_of_states
                     self.number_of_states = self.number_of_states + 1
 
+
+dfa = formal_dfa("(ara|arama)")
+dfa.print_table()
+
+for i in dfa.transitions:
+    i.print_t()

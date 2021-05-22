@@ -37,7 +37,7 @@ class TextEdit(QWidget):
             if char == " ":
                 self.highlight(start, i - start, 2)
                 self.wait(self.timer)
-                print(self.txt[start: i])
+                
                 if self.controlManager.checkString(self.txt[start: i]):
                     self.highlight(start, i - start, 1)
                 else:
@@ -54,7 +54,7 @@ class TextEdit(QWidget):
         elif col == 2:
             clr = QColor(255, 255, 0)
         elif col == 3:
-            clr = clr = QColor(0, 0, 0)
+            clr = QColor(0, 0, 0)
 
         # metin rengi
         fmt = QTextCharFormat()

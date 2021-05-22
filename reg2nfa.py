@@ -23,14 +23,14 @@ class formal_nfa:
         self.Q = 2
         self.transitions = []
         self.start = 0
-        self.accept = 1
+        self.accept = [1]
         self.must_change_states = {}
         self.__find_transitions(0,1,regex)
         self.__deleteStartofStar()
-        #self.print_nfa()
 
     # Print NFA. 
     def print_nfa(self):
+
         print("\n\n\nStates: ", end=" ")
 
         for i in range(self.Q):
@@ -44,7 +44,7 @@ class formal_nfa:
 
         print(f"\nStart state is q{self.start}")
 
-        print(f"Accept state is q{self.accept}\n\n")
+        print(f"Accept state is q{self.accept[0]}\n\n")
 
 
     '''
@@ -71,8 +71,9 @@ class formal_nfa:
         somethingChanged = True  
 
         while(somethingChanged): # We must check all situations.
-            
+
             somethingChanged = False
+
             for value in self.must_change_states.values():
                 for key in self.must_change_states.keys():
                     if value == key:
@@ -91,17 +92,23 @@ class formal_nfa:
         for key, value in self.must_change_states.items():
             if key == self.start:
                 self.start = value
-            if key == self.accept:
-                self.accept = value
+            if key == self.accept[0]:
+                self.accept[0] = value
             for t in self.transitions:
                 if t.end == key:
-                    #print(f"{t.start} -> {t.end}   ---   {t.start} -> {value}")
                     t.end = value
                 if t.start == key:
                     t.start = value
         
         self.__cleanStates()
 
+    
+    # This function takes n as input and decrease 1 states which greater than n
+    # For example:
+    # before  -  0 1 2 3 4 5 6
+    #       minus_1_all_states_after(3)
+    # after   -  0 1 2 3 4 5
+    
     def __minus_1_all_states_after(self, n):
         for t in self.transitions:
             if t.start > n:
@@ -117,8 +124,8 @@ class formal_nfa:
         
         if self.start > n:
             self.start = self.start - 1
-        if self.accept > n:
-            self.accept = self.accept - 1
+        if self.accept[0] > n:
+            self.accept[0] = self.accept[0] - 1
             
             
     def __cleanStates(self):
@@ -168,12 +175,10 @@ class formal_nfa:
     # This is recursive function which find next transition.
     
     def __find_transitions(self, start, end, regex):
+
         t = transition(start, end, regex)
 
-        #self.transitions.append(t)
-
-        #t.print_t()
-
+        # Checking transition. If True we our t to add transitions 
         if(t.isDone()):
             self.transitions.append(t)
         else:
@@ -195,10 +200,6 @@ class formal_nfa:
 
 
             for i, element in enumerate(t.regex):
-                
-                #t.print_t()
-
-                
 
                 if(element == "("):
                     p = p + 1
@@ -221,7 +222,7 @@ class formal_nfa:
 
 
                 elif(element == "*" and self.__IsThereAnyUnion(t.regex) and p == 0):
-                    #print("in star")
+
                     point = i
 
                     if(t.regex[i-1] == ")"):
@@ -234,42 +235,5 @@ class formal_nfa:
                     
                     if i != len(t.regex) - 1:
                         self.__find_transitions(t.start, t.end, t.regex[0:point-1] + t.regex[i+1:])
-                    '''else:
-                        if t.end == self.accept:
-                            self.accept = t.start'''
 
                     break
-
-
-
-
-
-
-nfa = formal_nfa("(a|b)*aba")   
-
-
-
-"""
-Düzeltilmesi gerekli:
---- Değişkenler anlamdırılmalı            .  In Process
---- Comment eklenmeli                     .  In Process
---- Stateler estetik olarak düzeltilmeli  .  OK
-
-
-
-Testi geçti:
-
-(aa | ab | ba | bb)*
-10|(0|11)0*1
-(a|b)*aba
-ab
-a|b
-a*
-(ab|a)*
-1(1*01*01*)*
-
-Testi geçemedi:
-
----
-
-"""
