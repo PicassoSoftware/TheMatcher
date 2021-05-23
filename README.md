@@ -1,6 +1,11 @@
 ## OTOMATA PROJESİ
 
-*Kullanıcının belirlediği _Regular Express_ şartlarına uygun nfa ve dfa bilgisi elde edilir. Verilen metin içerisinde uygunluk kontrol edilir.*
+> Kullanıcının belirlediği _Regular Express_ şartlarına uygun nfa ve dfa bilgisi elde edilir. Verilen metin içerisinde uygunluk kontrol edilir.
+
+
+
+
+
 
 #### **Yapılanlar**
 - [x] Düzenli ifade ve arama yapılacak metin _GUI_ üzerinden alınabilir hale geldi. 
