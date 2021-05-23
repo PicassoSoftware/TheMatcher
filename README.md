@@ -20,10 +20,10 @@
 Öğrenci No | Adı Soyadı | Görevi
 ------------ | ------------- | -------------
 383183 | Hatice Kovan | **GUI** ekranının yapılması. |
-383201 | *_Neziha Esra Bilgili_* | Metin içinde aranan kelimenin uyuşma durumuna göre **rengini** değiştirmek. |
+383201 | *__Neziha Esra Bilgili__* | Metin içinde aranan kelimenin uyuşma durumuna göre **rengini** değiştirmek. |
 383221 | Sırat Semih Çöp | Elde edilen **Formal** bilgi ile başarılı veya başarısız durum bilgisini oluşturmak. |
 383245 | Furkan Sefa Demirci | **NFA**, **DFA** çizimi ve durum değişimlerinin dinamik olarak gösterilmesi. |
 394783 | Sema Nur Boz | **NFA**'den **DFA** oluşturmak. |
 399605 | Erkin Abuzarli | Verilen **RegEx**’i **NFA**’e dönüştürmek.  |
 
-- ![#f03c15]
+
