@@ -31,7 +31,7 @@
 <br>
 
 ## GUI VE KULLANIMI
-<img url="https://i.makeagif.com/media/5-23-2021/bOKZkU.gif" />
+##### Gif eklenecek.
 <br>
 <br>
 - Gui dosyasını çalıştırdığımızda açılan ekranda regex etiketli kısıma aratmak istediğiniz ifadeyi giriniz. 
