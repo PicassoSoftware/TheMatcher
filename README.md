@@ -30,6 +30,6 @@
 <br>
 <br>
 
-##GUI VE KULLANIMI
+## GUI VE KULLANIMI
 
 
