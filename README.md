@@ -26,6 +26,10 @@
 399605 | Erkin Abuzarli | Verilen **RegEx**’i **NFA**’e dönüştürmek.  |
 
 
+<br>
+<br>
+<br>
 
+##GUI VE KULLANIMI
 
 
