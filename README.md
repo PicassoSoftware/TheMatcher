@@ -1,11 +1,11 @@
-## OTOMATA PROJESİ
+# OTOMATA PROJESİ
 
 > Kullanıcının belirlediği _Regular Express_ şartlarına uygun nfa ve dfa bilgisi elde edilir. Verilen metin içerisinde uygunluk kontrol edilir.
 
 <br>
 <br>
 
-#### **Yapılanlar**
+### **Yapılanlar**
 - [x] Düzenli ifade ve arama yapılacak metin _GUI_ üzerinden alınabilir hale geldi. 
 - [x] Gui üzerinden alınan her `RE'`nin hem `NFA'e` hem de `DFA'e` dönüşümü sağlandı. **Bu dönüşümde hazır kütüphanelerden yararlanılmadı.**
 - [x] Dinamik olarak `RE'`nin `NFA` ve `DFA` karşılığı, seçime göre ekranda koşulur hale geldi. Bu işlem yapılırken aynı zamanda, işlem gören metin rengi değiştirilerek belirgin hale getirildi.
