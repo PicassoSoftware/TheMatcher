@@ -32,7 +32,7 @@
 
 ## GUI VE KULLANIMI
 
-https://user-images.githubusercontent.com/68740910/119257681-09aeb100-bbcf-11eb-930f-b79250acf95b.mp4
+![Deneme](https://user-images.githubusercontent.com/68740910/119257724-39f64f80-bbcf-11eb-8fa2-e41610b5bd86.gif)
 
 <br>
 <br>
