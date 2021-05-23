@@ -21,7 +21,7 @@ class FsmDrawer():
         except:
             self.fsm.node(str(self.formalDefinition.accept))
         self.img = Window(self.label)
-        print(str(self.formalDefinition.accept))
+        
 
     def drawFsm(self, fsmStart, fsmNext, fsmLabel):
         self.fsm.attr("node", shape="circle", color="#fdfaf6", fontcolor="#fdfaf6")
