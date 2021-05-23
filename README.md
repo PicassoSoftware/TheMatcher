@@ -1,5 +1,5 @@
 # OTOMATA PROJESİ
-
+## *The Matcher*
 > Kullanıcının belirlediği _Regular Express_ şartlarına uygun nfa ve dfa bilgisi elde edilir. Verilen metin içerisinde uygunluk kontrol edilir.
 
 <br>
@@ -32,5 +32,21 @@
 
 ## GUI VE KULLANIMI
 ![image](https://user-images.githubusercontent.com/68740910/119256727-ce11e800-bbca-11eb-83ab-0d537b4a676b.png)
+<br>
+- Gui dosyasını çalıştırdığımızda açılan ekranda regex etiketli kısıma aratmak istediğiniz ifadeyi giriniz. 
+
+- Metin etiketli kısma regexi içinde aratacağınız metni giriniz. 
+
+- Open File kısmından aratmak istediğiniz metin dosyasını seçerek text kutusuna ekleyebilirsiniz. 
+
+- Daha sonra NFA, DFA butonlarından stateni görmek istediğiniz durumu seçiniz. Seçtiğiniz butonun rengi değişiyorsa bu o işlemi gerçekleştireceğinizi belirtmektedir. İlk ekran açıldığında Dfa butonu basılı halde gelecektir. 
+
+- Start butonuna bastığınızda ifadeniz metin içerisinde aranmaya ve bununla birlikte state durumları gösterilme başlayacaktır. 
+
+- Metin içerisinde arama işlemi yapılırken ilk başta incelenen kelime sarı renk olacaktır. Eğer aranan kelime ile incelenen kelime uyuşuyorsa kelimemiz yeşil renge, uyuşmuyorsa beyaz rengine dönecektir. 
+
+- Sarıya dönen kelimemiz içerinde gezinirken sağ taraftaki statemiz de bu işlemle senkron bir şekilde arama işlemini gerçekleştirmeye başlar ve bu her kelime için tekrarlanır. Aranan durum tek tek gezinerek state te turuncu renkle gösterilmektedir. 
+
+- Stop tuşuna bastığımızda aranılan kelime için işlem yapılır ve sonra olaylar durur. NFA/DFA ve Start buton renkleri sıfırlanır. 
 
 
