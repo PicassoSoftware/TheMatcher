@@ -1,4 +1,4 @@
-#Pycharmda hata alınıyorsa pip insall graphviz yapılmadır.
+#Pycharmda hata alınıyorsa pip install graphviz yapılmadır.
 from graphviz import Digraph
 import time
 from showFsm import Window
