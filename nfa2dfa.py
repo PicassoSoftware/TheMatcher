@@ -1,19 +1,18 @@
 import reg2nfa
 
 
-class transition:
+class transition: # Transitions class holds transitions
     def __init__(self, start, end, regex):
         self.start = start
         self.end = end
         self.regex = regex
-
 
     # Print transition prettier.
     def print_t(self):
         print(f'\tq{self.start} -> q{self.end} when {self.regex} comes.')
 
 
-class state:         #state object created
+class state:  # State object created
     def __init__(self, q, name):
         self.name = name
         if type(q) == int:
@@ -21,67 +20,64 @@ class state:         #state object created
         else:
             self.q = q
 
-        """endsleri tutuyor"""
 
-
-class formal_dfa:
+class formal_dfa: #DFA class
     def __init__(self, regex):
         self.regex = regex
         self.nfa = reg2nfa.formal_nfa(regex)
-        self.accept = self.nfa.accept
+        self.accept = [self.nfa.accept]
         self.start = self.nfa.start
         self.empty = 61
         self.used_language = []
         self.states = []
         self.table = []
+        self.transitions_for_sm = []
         self.transitions = []
         self.number_of_states = self.nfa.Q
         self.create_table()
         self.find_transitions()
         self.optimize()
 
-    def optimize(self):
+    def optimize(self): #This function deletes unnecessary states.
+
         ends = [t.end for t in self.transitions]
 
         for q in range(self.number_of_states):
             if q not in ends and q != self.start:
-
                 for t in self.transitions:
                     if t.start == q:
                         self.transitions.remove(t)
+                        self.optimize()
 
-                        self.number_of_states -= 1
+    def minus_1_all_states_after(self, n):#This function helps to delete unnecessary states.
 
-                        for t in self.transitions:
-                            if t.start > q:
-                                t.start = t.start - 1
-                            if t.end > q:
-                                t.end = t.end - 1
+        for t in self.transitions:
+            if t.start > n:
+                t.start = t.start - 1
+            if t.end > n:
+                t.end = t.end - 1
 
-                        if self.start > q:
-                            self.start = self.start - 1
+        for key, value in self.must_change_states.items():
+            if key > n:
+                key = key - 1
+            if value > n:
+                value = value - 1
 
-                        for i, a in enumerate(self.accept):    
-                            if a > q:
-                                self.accept[i] -= 1
+        if self.start > n:
+            self.start = self.start - 1
+        if self.accept > n:
+            self.accept = self.accept - 1
 
-                        self.optimize()   
-                        break
-                break
-            
-              
-
-
-    def find_transitions(self):
+    def find_transitions(self): # For draw
         for start, row in enumerate(self.table):
-            for regexnum,end in enumerate(row):
+            for regexnum, end in enumerate(row):
 
-                t = transition(start,end,self.used_language[regexnum])
+                t = transition(start, end, self.used_language[regexnum])
+                self.transitions_for_sm.append(t)
                 if end != self.empty:
                     self.transitions.append(t)
 
-
-    def add_empty_row_to_table(self):
+    def add_empty_row_to_table(self): #This function adds a empty row to the table
         row = []
         for i in range(len(self.used_language)):
             row.append(self.empty)
@@ -100,17 +96,15 @@ class formal_dfa:
                 print(chr(unnamed_states + 65), end=' ')
             print('')
 
-
     def find_used_language(self):
         for c in self.regex:
             if (c not in self.used_language) and (c not in ['(', '|', ')', '*']):
                 self.used_language.append(c)
 
+    def create_table(self): #This function creates table and puts states in the table.
 
-    def create_table(self):
 
         self.find_used_language()
-
 
         for i in range(self.nfa.Q):
             s = state(i, i)
@@ -150,6 +144,7 @@ class formal_dfa:
 
 
 dfa = formal_dfa("(ara|arama)")
+dfa.nfa.print_nfa()
 dfa.print_table()
 
 for i in dfa.transitions:
