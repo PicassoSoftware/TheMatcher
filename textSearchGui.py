@@ -9,9 +9,8 @@ import time
 import os
 
 
-# txt = "1001 10000 10000000 100000000 000000000000 1010111101 101001 1001001 1001010011 0101101 001 10100 1010100 0100001 0000001 000000"
 class TextEdit(QWidget):
-    def __init__(self, regex=' ', txt=" ", textEdit = None, fa = False, timer = 0.4, label = None):
+    def __init__(self, regex='a*li', txt="ali veli", textEdit = None, fa = False, timer = 0.4, label = None):
         super(TextEdit, self).__init__()
 
         self.stop = False
@@ -64,7 +63,7 @@ class TextEdit(QWidget):
 
         cursor.setPosition(start)
         cursor.movePosition(QTextCursor.Right,
-                            QTextCursor.KeepAnchor, n)  # keepanchor, merge bak
+                            QTextCursor.KeepAnchor, n)  
         cursor.mergeCharFormat(fmt)
 
     def wait(self, second):
