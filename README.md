@@ -31,7 +31,9 @@
 <br>
 
 ## GUI VE KULLANIMI
-##### Gif eklenecek.
+
+https://user-images.githubusercontent.com/68740910/119257681-09aeb100-bbcf-11eb-930f-b79250acf95b.mp4
+
 <br>
 <br>
 - Gui dosyasını çalıştırdığımızda açılan ekranda regex etiketli kısıma aratmak istediğiniz ifadeyi giriniz. 
