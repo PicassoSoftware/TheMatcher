@@ -3,7 +3,9 @@
 > Kullanıcının belirlediği _Regular Express_ şartlarına uygun nfa ve dfa bilgisi elde edilir. Verilen metin içerisinde uygunluk kontrol edilir.
 
 
-
+<br>
+<br>
+<br>
 
 
 
