@@ -108,7 +108,7 @@ class Regex(QWidget):
         else:
             fa = False
 
-        self.src = TextEdit(self.lineEdit.text(), self.textEdit.toPlainText()+" ", self.textEdit, fa, 0.4, self.label)
+        self.src = TextEdit(self.lineEdit.text(), self.textEdit.toPlainText()+" ", self.textEdit, fa, 0.2, self.label)
         self.src.run()
 
     def stop(self):
