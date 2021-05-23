@@ -43,7 +43,7 @@ class TextEdit(QWidget):
                 else:
                     self.highlight(start, i - start, 3)
                 start = i + 1
-        os.remove("fsm.txt.svg") #burda sefanın svg lerini kapandığında siliyor.
+        os.remove("fsm.txt.svg") 
         
 
 
@@ -67,7 +67,7 @@ class TextEdit(QWidget):
         cursor.mergeCharFormat(fmt)
 
     def wait(self, second):
-        QCoreApplication.processEvents() #Belirtilen bayraklara göre çağıran iş parçacığı için bazı bekleyen olayları işleyen fonk.
+        QCoreApplication.processEvents()
         time.sleep(second)
 
 
