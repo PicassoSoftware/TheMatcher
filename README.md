@@ -13,7 +13,9 @@
 - [x] Metin ile formal bilginin eşleşmesi durumunda rengi değiştirilerek, prosedüre uygun olduğu belirtildi.
 
 
-
+<br>
+<br>
+<br>
 
 Öğrenci No | Adı Soyadı | Görevi
 ------------ | ------------- | -------------
@@ -23,3 +25,5 @@
 383245 | Furkan Sefa Demirci | **NFA**, **DFA** çizimi ve durum değişimlerinin dinamik olarak gösterilmesi. |
 394783 | Sema Nur Boz | **NFA**'den **DFA** oluşturmak. |
 399605 | Erkin Abuzarli | Verilen **RegEx**’i **NFA**’e dönüştürmek.  |
+
+*Lider*
