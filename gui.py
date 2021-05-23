@@ -4,7 +4,7 @@ from PyQt5.QtCore import QCoreApplication, QFile
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont,  QWheelEvent
-from textsearchgui import TextEdit
+from textSearchGui import TextEdit
 
 
 class Regex(QWidget):
