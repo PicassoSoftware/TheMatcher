@@ -31,7 +31,7 @@
 <br>
 
 ## GUI VE KULLANIMI
-![image](https://user-images.githubusercontent.com/68740910/119256727-ce11e800-bbca-11eb-83ab-0d537b4a676b.png)
+![image](https://user-images.githubusercontent.com/68740910/119257491-167ed500-bbce-11eb-998e-b2317392d131.png)
 <br>
 <br>
 - Gui dosyasını çalıştırdığımızda açılan ekranda regex etiketli kısıma aratmak istediğiniz ifadeyi giriniz. 
