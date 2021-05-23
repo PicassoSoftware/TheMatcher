@@ -27,6 +27,7 @@ class formal_nfa:
         self.must_change_states = {}
         self.__find_transitions(0,1,regex)
         self.__deleteStartofStar()
+        self.__delete_multiple()
 
     # Print NFA. 
     def print_nfa(self):
@@ -60,6 +61,14 @@ class formal_nfa:
 
     __optimizeChangables function do this operation.
     ''' 
+
+    def __delete_multiple(self):
+        for i, t1 in enumerate(self.transitions):
+            for t2 in self.transitions[i+1:]:
+                if t1.start == t2.start and t1.end == t2.end and t1.regex == t2.regex:
+                    t2.print_t()
+                    self.transitions.remove(t2)
+
 
     def __optimizeChangables(self):
         # Find key by given value.
