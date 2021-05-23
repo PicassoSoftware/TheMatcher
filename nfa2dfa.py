@@ -39,8 +39,6 @@ class formal_dfa:
         self.create_table()
         self.find_transitions()
         self.optimize()
-        for i in self.transitions:
-            i.print_t()
 
     def optimize(self):
         ends = [t.end for t in self.transitions]
@@ -151,8 +149,3 @@ class formal_dfa:
                     self.add_empty_row_to_table()
                     self.table[current_state.name][i] = self.number_of_states
                     self.number_of_states = self.number_of_states + 1
-
-
-dfa = formal_dfa("(ara|arama)")
-dfa.print_table()
-
