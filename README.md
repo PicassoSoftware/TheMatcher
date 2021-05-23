@@ -31,5 +31,6 @@
 <br>
 
 ## GUI VE KULLANIMI
+![image](https://user-images.githubusercontent.com/68740910/119256727-ce11e800-bbca-11eb-83ab-0d537b4a676b.png)
 
 
