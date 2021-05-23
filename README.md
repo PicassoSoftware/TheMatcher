@@ -31,7 +31,7 @@
 <br>
 
 ## GUI VE KULLANIMI
-![image](https://user-images.githubusercontent.com/68740910/119257491-167ed500-bbce-11eb-998e-b2317392d131.png)
+https://i.makeagif.com/media/5-23-2021/bOKZkU.gif
 <br>
 <br>
 - Gui dosyasını çalıştırdığımızda açılan ekranda regex etiketli kısıma aratmak istediğiniz ifadeyi giriniz. 
