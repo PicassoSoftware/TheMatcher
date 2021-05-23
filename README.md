@@ -2,12 +2,9 @@
 
 > Kullanıcının belirlediği _Regular Express_ şartlarına uygun nfa ve dfa bilgisi elde edilir. Verilen metin içerisinde uygunluk kontrol edilir.
 
-
 <br>
 <br>
 <br>
-
-
 
 #### **Yapılanlar**
 - [x] Düzenli ifade ve arama yapılacak metin _GUI_ üzerinden alınabilir hale geldi. 
@@ -18,13 +15,7 @@
 
 
 
-![GitHub Logo](/images/logo.png)
-Format: ![Alt Text](url)
-
-_You **can** combine them_
-
-
-First Header | Second Header
------------- | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
+Öğrenci No | Adı Soyadı | Görevi
+------------ | ------------- | -------------
+383183 | Hatice Kovan | `GUI` ekranının yapılması |
+383201 | *Neziha Esra Bilgili* | Metin içinde aranan kelimenin uyuşma durumuna göre rengini değiştirmek |
