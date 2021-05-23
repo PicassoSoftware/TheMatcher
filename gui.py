@@ -1,7 +1,6 @@
 #Pycharm için pip install PyQt5 yapılmalıdır.
 import sys
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QFont,  QWheelEvent
 from textSearchGui import TextEdit
 
 
@@ -36,7 +35,7 @@ class Regex(QWidget):
 
     def initUI(self):
         #Metin kutusu , butonlar ekleme işlemleri yapılır.
-        self.text_css = 'border-style: none'
+        self.text_css = 'border-style: none'   #Kenarları siliyor.
         self.title = QLabel('RegEx')
         self.text = QLabel('Text')
         self.text.setFixedSize(40, 20)
@@ -104,9 +103,11 @@ class Regex(QWidget):
             fa = True
         else:
             fa = False
-
-        self.src = TextEdit(self.lineEdit.text(), self.textEdit.toPlainText()+" ", self.textEdit, fa, 0.2, self.label)
+            
+        # Textedit ve label üzerinde işlem yapabilmeleri için referans olarak verilir.
+        self.src = TextEdit(self.lineEdit.text(), self.textEdit.toPlainText()+" ", self.textEdit, fa, 0.2, self.label)  
         self.src.run()
+        self.stop()
 
     def stop(self):
         self.src.stop = True   #Arama işlemini durdurur.
@@ -128,7 +129,7 @@ class Regex(QWidget):
 
     def open(self):
         options = QFileDialog.Options()
-        
+        #txt formatında dosya seçilebilmesini sağlar.
         fileName, _ = QFileDialog.getOpenFileName(self, 'QFileDialog.getOpenFileName()', '',
                                                   'Text (*.txt)', options=options)
         
