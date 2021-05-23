@@ -1,7 +1,5 @@
 #Pycharm için pip install PyQt5 yapılmalıdır.
 import sys
-from PyQt5.QtCore import QCoreApplication, QFile
-from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont,  QWheelEvent
 from textSearchGui import TextEdit
@@ -11,7 +9,7 @@ class Regex(QWidget):
 
     def __init__(self):
         super(Regex, self).__init__()
-
+        #Arka plan renklerini, kutuların şeklini ayarlar.
         self.setStyleSheet(("""background-color: 
                                rgba(35,39,42); 
                                color: rgba(153,170,181); 
@@ -20,11 +18,11 @@ class Regex(QWidget):
                                border-width: 3px; 
                                border-color: 
                                rgba(68,68,68);"""))
-
+        #Butonları ekliyoruz.
         self.startButton = QPushButton('Start')
         self.stopButton = QPushButton('Stop')
         self.dfaButton = QPushButton('DFA')
-        self.dfaButton.setEnabled(False)
+        self.dfaButton.setEnabled(False)      #Dfa butonu basılı halde gelir.
         self.dfaButton.setStyleSheet("background-color :rgba(120, 123, 147) ")
         self.nfaButton = QPushButton('NFA')
         self.fileButton = QPushButton('Open File')
@@ -37,6 +35,7 @@ class Regex(QWidget):
         self.initUI()
 
     def initUI(self):
+        #Metin kutusu , butonlar ekleme işlemleri yapılır.
         self.text_css = 'border-style: none'
         self.title = QLabel('RegEx')
         self.text = QLabel('Text')
@@ -47,15 +46,13 @@ class Regex(QWidget):
 
         self.lineEdit = QLineEdit(self.text)
         self.textEdit = QTextEdit()
-        #self.textEdit.setFixedSize(580, 400)
         self.label = QLabel(self)
-        #self.label.setFixedSize(600, 420)
-        self.txt = QTextEdit()
+     
 
         self.mainLayout = QHBoxLayout()
         self.regexLayout = QHBoxLayout()
         self.metinLayout = QGridLayout()
-        self.ssLayout = QHBoxLayout()
+        self.ssLayout = QHBoxLayout()  #start/ stop butonlarının eklendiği layout oluşturma
         self.layout1 = QVBoxLayout()  # sağ taraf için layout oluşturma
         self.layout2 = QVBoxLayout()  # sol taraf  için layout oluşturma
         self.nfaDfaLayout = QHBoxLayout()
@@ -75,7 +72,7 @@ class Regex(QWidget):
         self.ssLayout.addWidget(self.stopButton)
         self.ssLayout.addStretch()
 
-        self.nfaDfaLayout.addStretch()
+        self.nfaDfaLayout.addStretch()  #Boşluk bırakılmasını sağlar.
         self.nfaDfaLayout.addWidget(self.dfaButton)
         self.nfaDfaLayout.addWidget(self.nfaButton)
         self.nfaDfaLayout.addStretch()
@@ -85,7 +82,7 @@ class Regex(QWidget):
 
         self.mainLayout.addLayout(self.layout2)
         self.mainLayout.addLayout(self.layout1)
-
+        
         self.dfaButton.clicked.connect(self.select)
         self.nfaButton.clicked.connect(self.select)
         self.fileButton.clicked.connect(self.open)
@@ -101,7 +98,7 @@ class Regex(QWidget):
     def search(self):
         self.startButton.setStyleSheet("background-color : rgba(120, 123, 147)")
         self.stopButton.setStyleSheet('background-color: None')
-        self.textEdit.setReadOnly(True)
+        self.textEdit.setReadOnly(True)  #Text kısmına yazmayı engeller.
 
         if self.nfaButton.isEnabled():
             fa = True
@@ -112,7 +109,7 @@ class Regex(QWidget):
         self.src.run()
 
     def stop(self):
-        self.src.stop = True
+        self.src.stop = True   #Arama işlemini durdurur.
         self.textEdit.setReadOnly(False)
         self.stopButton.setStyleSheet("background-color : rgba(120, 123, 147)")
         self.startButton.setStyleSheet('background-color: None')
@@ -120,12 +117,12 @@ class Regex(QWidget):
     def select(self):
         if self.sender().text() == 'DFA':
             self.dfaButton.setEnabled(False)
-            self.nfaButton.setEnabled(True)
+            self.nfaButton.setEnabled(True)  # Nfa butonu basılabilir haldedir.
             self.dfaButton.setStyleSheet("background-color :rgba(120, 123, 147) ")
             self.nfaButton.setStyleSheet('background-color: None')
         else:
             self.nfaButton.setEnabled(False)
-            self.dfaButton.setEnabled(True)
+            self.dfaButton.setEnabled(True)  
             self.nfaButton.setStyleSheet("background-color : rgba(120, 123, 147)")
             self.dfaButton.setStyleSheet('background-color: None')
 
