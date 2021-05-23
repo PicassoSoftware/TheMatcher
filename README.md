@@ -26,4 +26,4 @@
 394783 | Sema Nur Boz | **NFA**'den **DFA** oluşturmak. |
 399605 | Erkin Abuzarli | Verilen **RegEx**’i **NFA**’e dönüştürmek.  |
 
-- ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `#f03c15`
+- ![#f03c15]
