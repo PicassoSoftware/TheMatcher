@@ -37,6 +37,7 @@
 
 <br>
 <br>
+
 - Gui dosyasını çalıştırdığımızda açılan ekranda regex etiketli kısıma aratmak istediğiniz ifadeyi giriniz. 
 
 - Metin etiketli kısma regexi içinde aratacağınız metni giriniz. 
