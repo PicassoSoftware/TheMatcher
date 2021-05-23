@@ -18,4 +18,4 @@
 Öğrenci No | Adı Soyadı | Görevi
 ------------ | ------------- | -------------
 383183 | Hatice Kovan | `GUI` ekranının yapılması |
-383201 | *Neziha Esra Bilgili* | Metin içinde aranan kelimenin uyuşma durumuna göre rengini değiştirmek |
+383201 | *_Neziha Esra Bilgili_* | Metin içinde aranan kelimenin uyuşma durumuna göre rengini değiştirmek |
