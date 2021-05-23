@@ -32,7 +32,8 @@
 
 ## GUI VE KULLANIMI
 
-![Deneme](https://user-images.githubusercontent.com/68740910/119257724-39f64f80-bbcf-11eb-8fa2-e41610b5bd86.gif)
+![2021-05-23 13-47-54](https://user-images.githubusercontent.com/68740910/119257787-86418f80-bbcf-11eb-91b9-5a5447cd78d3.gif)
+
 
 <br>
 <br>
