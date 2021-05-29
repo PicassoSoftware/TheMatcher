@@ -21,7 +21,6 @@ class state:         #state object created
         else:
             self.q = q
 
-        """endsleri tutuyor"""
 
 
 class formal_dfa:
@@ -30,7 +29,7 @@ class formal_dfa:
         self.nfa = reg2nfa.formal_nfa(regex)
         self.accept = self.nfa.accept
         self.start = self.nfa.start
-        self.empty = 61
+        self.empty = 61 
         self.used_language = []
         self.states = []
         self.table = []
@@ -41,35 +40,39 @@ class formal_dfa:
         self.optimize()
 
     def optimize(self):
+
+        for t in self.transitions:
+            t.print_t()
+        print()
         ends = [t.end for t in self.transitions]
 
         for q in range(self.number_of_states):
             if q not in ends and q != self.start:
-
+                print(q, ' bulundu')
                 if q in self.accept:
                     self.accept.remove(q)
                     
                 for t in self.transitions:
                     if t.start == q:
                         self.transitions.remove(t)
-
-                        self.number_of_states -= 1
-
-                        for t in self.transitions:
-                            if t.start > q:
-                                t.start = t.start - 1
-                            if t.end > q:
-                                t.end = t.end - 1
-
-                        if self.start > q:
-                            self.start = self.start - 1
-
-                        for i, a in enumerate(self.accept):    
-                            if a > q:
-                                self.accept[i] -= 1
-
-                        self.optimize()   
                         break
+
+                for t in self.transitions:
+                    if t.start > q:
+                        t.start = t.start - 1
+                    if t.end > q:
+                        t.end = t.end - 1
+
+                self.number_of_states -= 1
+                
+                if self.start > q:
+                    self.start = self.start - 1
+
+                for i, a in enumerate(self.accept):    
+                    if a > q:
+                        self.accept[i] -= 1
+
+                self.optimize()   
                 break
             
               
@@ -149,3 +152,7 @@ class formal_dfa:
                     self.add_empty_row_to_table()
                     self.table[current_state.name][i] = self.number_of_states
                     self.number_of_states = self.number_of_states + 1
+
+
+
+
